@@ -1,0 +1,10 @@
+/node_modules
+.env*
+
+# Build folder
+/dist
+/build
+
+# Logs
+*.log
+/logs
