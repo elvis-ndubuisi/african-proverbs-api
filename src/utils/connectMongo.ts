@@ -4,13 +4,10 @@ import mongoose from "mongoose";
 
 dotenv.config();
 
-async function connect() {
+async function connectMongo() {
   // strictQuery Deprecation warning.
-  mongoose.set("strictPopulate", false);
+  mongoose.set("strictQuery", false);
   // Accounnt for reconnections
-  mongoose.connection.on("reconnected", () => {
-    log.info("Re-Connected to data source : Mongo");
-  });
   try {
     const conn = await mongoose.connect(String(process.env.MONGO_URI), {
       dbName: "african-proverbs",
@@ -27,4 +24,4 @@ async function connect() {
   });
 }
 
-export default connect;
+export default connectMongo;
