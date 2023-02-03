@@ -1,6 +1,7 @@
 import express from "express";
 import {
   forgotPasswordAdminHandler,
+  getCurrentAdminHandler,
   registerAdminHandler,
   resetPasswordAdminHandler,
   verifyAdminHandler,
@@ -12,11 +13,13 @@ import {
   resetPasswordAdminSchema,
   verifyAdminSchema,
 } from "../schemas/admin.schema";
+import deserializeAdmin from "../middlewares/deserializeAdmin.middleware";
 
 const router = express.Router();
 
+router.use(deserializeAdmin);
 router.post(
-  "/admin",
+  "/api/admins",
   validateResources(registerAdminSchema),
   registerAdminHandler
 );
@@ -35,5 +38,6 @@ router.post(
   validateResources(resetPasswordAdminSchema),
   resetPasswordAdminHandler
 );
+router.get("/api/admin/me", getCurrentAdminHandler);
 
 export default router;

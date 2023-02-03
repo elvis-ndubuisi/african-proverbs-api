@@ -1,5 +1,6 @@
+import config from "config";
 import nodemailer, { SendMailOptions } from "nodemailer";
-import log from "./logger";
+import log from "./logger.util";
 
 // async function createTestCreds() {
 //   try {
@@ -11,19 +12,13 @@ import log from "./logger";
 // }
 // createTestCreds();
 
-const smtp: {
+const smtp = config.get<{
   user: string;
   pass: string;
   host: string;
   port: number;
   secure: boolean;
-} = {
-  user: "pzczsaaqrwrmmqeo@ethereal.email",
-  pass: "WWw9WAKRJW5GGD1hUz",
-  host: "smtp.ethereal.email",
-  port: 587,
-  secure: false,
-};
+}>("smtp");
 
 const transporter = nodemailer.createTransport({
   ...smtp,
@@ -33,7 +28,7 @@ const transporter = nodemailer.createTransport({
 async function sendEmail(payload: SendMailOptions) {
   transporter.sendMail(payload, (err, info) => {
     if (err) {
-      log.error(`mail error ${err}`);
+      log.error(`Mail Error: ${err}`);
       return;
     }
 

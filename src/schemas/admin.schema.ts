@@ -48,6 +48,33 @@ export const resetPasswordAdminSchema = object({
   }),
 });
 
+export const createProverbSchema = object({
+  body: object({
+    proverb: string({ required_error: "Proverb not provided" }).min(
+      40,
+      "Characters seems too short"
+    ),
+    country: string({ required_error: "Country is required" }),
+    interpretation: string({ required_error: "Interpretation is required" }),
+    // translations: array
+  }),
+  params: object({
+    adminId: string({ required_error: "Admin Id not provided" }),
+  }),
+});
+
+export const deleteProverbSchema = object({
+  params: object({
+    proverbId: string(),
+  }),
+});
+
+export const approveProverbSchema = object({
+  params: object({
+    submitProverbid: string(),
+  }),
+});
+
 // Interfaces
 export type RegisterAdminInput = TypeOf<typeof registerAdminSchema>["body"];
 export type VerifyAdminInput = TypeOf<typeof verifyAdminSchema>["params"];

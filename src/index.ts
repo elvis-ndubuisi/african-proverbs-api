@@ -1,18 +1,17 @@
+require("dotenv").config();
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
-import connectMongo from "./utils/connectMongo";
-import dotenv from "dotenv";
+import config from "config";
+import connectMongo from "./utils/connectMongo.util";
 import express from "express";
 import helmet from "helmet";
 import http from "http";
-import logger from "./utils/logger";
+import logger from "./utils/logger.util";
 import schema from "./graphql/schema";
 import resolvers from "./graphql/resolvers";
 import routes from "./routes";
-
-dotenv.config();
 
 async function bootStrap() {
   // Build Schema
@@ -39,17 +38,14 @@ async function bootStrap() {
     expressMiddleware(server)
   );
 
-  app.get("/", (req, res) => {
-    res.send("okay");
-  });
-
   app.use(routes);
 
+  const port = config.get("port");
   // app.listen on express server
   await new Promise<void>((resolve) =>
-    httpServer.listen({ port: 4000 }, resolve)
+    httpServer.listen({ port: port }, resolve)
   );
-  logger.info(`🚀 Server ready`);
+  logger.info(`🚀 Server ready on port: ${port}`);
   // connect to mongodb
   await connectMongo();
 }

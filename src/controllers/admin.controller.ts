@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { nanoid } from "nanoid";
 import {
   ForgotPasswordAdminInput,
   RegisterAdminInput,
@@ -10,13 +9,18 @@ import {
   createAdminService,
   findAdminByEmailService,
   findAdminByIdService,
-} from "../services/admin.services";
-import log from "../utils/logger";
+} from "../services/admin.service";
+import log from "../utils/logger.util";
 // Test
-import sendEmail from "../utils/mailer";
+import sendEmail from "../utils/mailer.util";
 
 /**
- * Authenticate admin register
+ * Register Admin. Admin roles are assigned by default if non is provided.
+ * @param req.body.username Username of registering admin.
+ * @param req.body.email  Email of registering admin.
+ * @param req.body.password Password chosen by registering admin.
+ * @param req.body.confirmPassword Secondary password to validate password.
+ * @returns HTTP response - text.
  */
 export async function registerAdminHandler(
   req: Request<{}, {}, RegisterAdminInput>,
@@ -42,7 +46,10 @@ export async function registerAdminHandler(
 }
 
 /**
- * Verify admin on register
+ * Verify newly registerd admin. Verification is performed via endpoint sent to admins mail
+ * @param req.params.id Admin ID
+ * @param req.params.verificationCode Verification code sent with the email.
+ * @returns HTTPS response - text.
  */
 export async function verifyAdminHandler(
   req: Request<VerifyAdminInput, {}, {}>,
@@ -70,7 +77,10 @@ export async function verifyAdminHandler(
 }
 
 /**
- * Forgot password
+ * Validates if an admin can reset their passwords if lost.
+ * Emails are sent to admin's mail IF admin info is found in the database
+ * @param req.body.email Email from admin
+ * @returns HTTP response - text
  */
 export async function forgotPasswordAdminHandler(
   req: Request<{}, {}, ForgotPasswordAdminInput>,
@@ -89,7 +99,7 @@ export async function forgotPasswordAdminHandler(
     return res.send("User is not verified");
   }
 
-  const passwordResetCode = "nanoid";
+  const passwordResetCode = "someidfromnano";
   admin.passwordResetCode = passwordResetCode;
 
   await admin.save();
@@ -107,7 +117,9 @@ export async function forgotPasswordAdminHandler(
 }
 
 /**
- * Reset password
+ * Resets admin password with new password
+ * @param req - id, passwordResetCode = req.params & password, confirmPassword from req.body
+ * @returns HTTP response - text.
  */
 export async function resetPasswordAdminHandler(
   req: Request<
@@ -118,7 +130,7 @@ export async function resetPasswordAdminHandler(
   res: Response
 ) {
   const { id, passwordResetCode } = req.params;
-  const { password, confirmPassword } = req.body;
+  const { password } = req.body;
 
   const admin = await findAdminByIdService(id);
 
@@ -139,15 +151,19 @@ export async function resetPasswordAdminHandler(
 }
 
 /**
+ * Gets details of currently logged in admin.
+ * @returns
+ */
+export async function getCurrentAdminHandler(req: Request, res: Response) {
+  return res.locals.admin;
+}
+
+/**
  * Authenticate admin login
  */
 
 /**
- * Authenticate admin forget password
- */
-
-/**
- * Add proverb to data source
+ * Create new proverb.
  */
 
 /**

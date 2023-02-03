@@ -1,15 +1,13 @@
-import dotenv from "dotenv";
-import log from "./logger";
+import config from "config";
+import log from "./logger.util";
 import mongoose from "mongoose";
-
-dotenv.config();
 
 async function connectMongo() {
   // strictQuery Deprecation warning.
   mongoose.set("strictQuery", false);
   // Accounnt for reconnections
   try {
-    const conn = await mongoose.connect(String(process.env.MONGO_URI), {
+    const conn = await mongoose.connect(config.get<string>("dbUri"), {
       dbName: "african-proverbs",
     });
 

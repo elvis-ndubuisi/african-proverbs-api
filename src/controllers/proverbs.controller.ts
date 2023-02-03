@@ -1,27 +1,33 @@
 import { Request, Response } from "express";
+import { getProverbService } from "../services/proverbs.service";
 
 /**
- * Gets a random proverb object
+ * Get a random proverb.
+ * @returns A proverb object
+ */
+export async function getProverbHandler(_: Request, res: Response) {
+  const proverb = await getProverbService();
+  console.log(proverb);
+  return res.send("done");
+}
+
+/**
+ * Get a random proverb whos country field matches request params.
+ * @returns A proverb object.
+ */
+export async function filterProverbHandler(req: Request, res: Response) {
+  res.send("randome flder proverb");
+}
+
+/**
+ * Get a single proverb object from cached memory.
+ * @param req
  * @param res
- * @route /proverb
- * @return object
+ * @returns A proverb object.
  */
-export async function getProverb(req: Request, res: Response): Promise<void> {}
+export async function todayProverbHandler(req: Request, res: Response) {
+  res.send("proverb today");
+}
 
-/**
- * Gets a random proverbs which country fields matches request query.
- * @param String
- * @return Promise<void>
- */
-export async function queryProverb(
-  req: Request,
-  res: Response
-): Promise<void> {}
-
-/**
- * Gets cached proverb. This proverb only chances every 24hrs.
- */
-export async function getCachedProverb(
-  req: Request,
-  res: Response
-): Promise<void> {}
+// Admins only
+export async function createNewProverb(req: Request, res: Response) {}

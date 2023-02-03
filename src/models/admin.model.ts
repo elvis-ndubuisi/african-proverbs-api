@@ -8,8 +8,15 @@ import {
   DocumentType,
 } from "@typegoose/typegoose";
 import argon2 from "argon2";
-import * as nanoid from "nanoid";
-import log from "../utils/logger";
+import log from "../utils/logger.util";
+
+export const privateFields = [
+  "password",
+  "__v",
+  "verificationCode",
+  "passwordRestCode",
+  "verified",
+];
 
 @pre<Admin>("save", async function () {
   if (!this.isModified("password")) return;
@@ -45,7 +52,7 @@ export class Admin {
   @prop({ default: false })
   verified!: boolean;
 
-  @prop({ required: true, default: () => "12345" })
+  @prop({ required: true, default: "12345" })
   verificationCode!: string;
 
   async validatePassword(this: DocumentType<Admin>, candidatepassword: string) {
