@@ -7,7 +7,7 @@ import {
 import {
   signAccessTokenService,
   signRefreshTokenService,
-  findSectionByIdService,
+  findSessionByIdService,
 } from "../services/auth.service";
 import lodash from "lodash";
 import { verifyJwt } from "../utils/jwt.util";
@@ -37,7 +37,7 @@ export async function createSessionHandler(
   return res.send({ accessToken, refreshToken });
 }
 
-export async function refreshTokenHandler(req: Request, res: Response) {
+export async function refreshAccessTokenHandler(req: Request, res: Response) {
   const refreshToken = lodash.get(req, "headers.x-refresh");
 
   const decoded = verifyJwt<{ session: string }>(
@@ -49,19 +49,19 @@ export async function refreshTokenHandler(req: Request, res: Response) {
     return res.status(401).send("Could not refresh access token");
   }
 
-  const session = await findSectionByIdService(decoded.session);
+  const session = await findSessionByIdService(decoded.session);
 
   if (!session || !session.valid) {
     return res.status(401).send("Could not refresh access token");
   }
 
-  const user = await findAdminByIdService(String(session.admin));
+  const admin = await findAdminByIdService(String(session.admin));
 
-  if (!user) {
-    return res.status(401).send("Could not refresh access token");
+  if (!admin) {
+    return res.status(401).send("Couldn't refresh access token");
   }
 
-  const accessToken = signAccessTokenService(user);
+  const accessToken = signAccessTokenService(admin);
 
   return res.send({ accessToken });
 }

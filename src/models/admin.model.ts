@@ -8,6 +8,7 @@ import {
   DocumentType,
 } from "@typegoose/typegoose";
 import argon2 from "argon2";
+import { nanoid } from "nanoid";
 import log from "../utils/logger.util";
 
 export const privateFields = [
@@ -52,14 +53,14 @@ export class Admin {
   @prop({ default: false })
   verified!: boolean;
 
-  @prop({ required: true, default: "12345" })
+  @prop({ required: true, default: () => nanoid() })
   verificationCode!: string;
 
   async validatePassword(this: DocumentType<Admin>, candidatepassword: string) {
     try {
       return await argon2.verify(this.password, candidatepassword);
     } catch (err) {
-      log.info("Couldn't validate password");
+      log.debug("Couldn't validate password");
       return false;
     }
   }

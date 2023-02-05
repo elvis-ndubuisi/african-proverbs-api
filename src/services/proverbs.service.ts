@@ -1,23 +1,18 @@
-import ProverbModel, { Proverb } from "../models/proverb.model";
+import ProverbModel, { privateFields } from "../models/proverb.model";
+import { CreateNewProverbInput } from "../schemas/proverb.schema";
+import lodash from "lodash";
 
 /**
- * Returns a randomly selected proverb.
+ * Fetches a single randomly selected proverb field.
+ * If filter param is passed, only proverb object which statisfies filter param is returned.
+ * @param {filter: filterString} Query string to use as filter.
+ * @returns A proverb object.
  */
-export async function getProverbService() {
-  const count = await ProverbModel.find().estimatedDocumentCount();
-  const seed = await Math.floor(Math.random() * count);
-
-  return seed;
-}
-
-/**
- * Fetches a randomly selected proverb filtered by country name.
- * @param country Name of country to use a filter.
- * @returns Proverb object
- */
-export async function filterProverbHandlerService(country: string) {
-  const value = await ProverbModel.find({ country: country });
-  return "filter proverb";
+export function getProverbService({ filter }: { filter?: string }) {
+  return ProverbModel.aggregate([
+    { $match: { $or: [{ country: filter }, { native: filter }] } },
+    { $sample: { size: 1 } },
+  ]);
 }
 
 /**
@@ -26,4 +21,49 @@ export async function filterProverbHandlerService(country: string) {
  */
 export async function todayProverbService() {
   return "proverb from redis memory";
+}
+
+export async function createNewProverbService(
+  body: CreateNewProverbInput,
+  authorId: string
+) {
+  return ProverbModel.create({ ...body, author: authorId });
+}
+
+export async function deleteProverbService({
+  proverbId,
+  authorId,
+}: {
+  proverbId: string;
+  authorId: string;
+}) {
+  try {
+    return await ProverbModel.findByIdAndDelete({
+      _id: proverbId,
+      author: authorId,
+    });
+  } catch (err) {
+    return err;
+  }
+}
+
+export async function editProverbService({
+  proverbId,
+  payload,
+}: {
+  proverbId: string;
+  payload: Partial<CreateNewProverbInput>;
+}) {
+  return ProverbModel.findByIdAndUpdate(proverbId, payload);
+}
+
+export function copyToProverbService({
+  payload,
+  authorId,
+}: {
+  payload: any;
+  authorId: string;
+}) {
+  const p = lodash.omit(payload, privateFields);
+  return ProverbModel.create({ ...p, author: authorId });
 }

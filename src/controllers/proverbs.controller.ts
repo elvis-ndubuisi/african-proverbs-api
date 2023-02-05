@@ -1,22 +1,47 @@
 import { Request, Response } from "express";
-import { getProverbService } from "../services/proverbs.service";
+import {
+  CreateNewProverbInput,
+  CreateProverbsInput,
+  ProverbFilterQueryInput,
+  ProverbIdQueryInput,
+} from "../schemas/proverb.schema";
+import {
+  createNewProverbService,
+  deleteProverbService,
+  editProverbService,
+  getProverbService,
+} from "../services/proverbs.service";
+import lodash from "lodash";
+import { privateFields } from "../models/proverb.model";
+import log from "../utils/logger.util";
 
 /**
  * Get a random proverb.
  * @returns A proverb object
  */
 export async function getProverbHandler(_: Request, res: Response) {
-  const proverb = await getProverbService();
-  console.log(proverb);
-  return res.send("done");
+  try {
+    const proverb = await getProverbService({});
+    res.send(lodash.omit(proverb[0], privateFields));
+  } catch (err: any) {
+    return res.status(500).send(err);
+  }
 }
 
 /**
  * Get a random proverb whos country field matches request params.
  * @returns A proverb object.
  */
-export async function filterProverbHandler(req: Request, res: Response) {
-  res.send("randome flder proverb");
+export async function filterProverbHandler(
+  req: Request<{}, {}, {}, ProverbFilterQueryInput>,
+  res: Response
+) {
+  try {
+    const proverb = await getProverbService({ filter: req.query.filter });
+    res.send(lodash.omit(proverb[0], privateFields));
+  } catch (err: any) {
+    res.send(err);
+  }
 }
 
 /**
@@ -30,4 +55,61 @@ export async function todayProverbHandler(req: Request, res: Response) {
 }
 
 // Admins only
-export async function createNewProverb(req: Request, res: Response) {}
+export async function createNewProverbHandler(
+  req: Request<{}, {}, CreateNewProverbInput>,
+  res: Response
+) {
+  try {
+    if (!res.locals.admin) {
+      return res.send("Some section you would never see. HAHAHAHAH");
+    }
+
+    const proverb = await createNewProverbService(
+      req.body,
+      res.locals.admin._id
+    );
+    res.json(lodash.omit(proverb.toJSON(), privateFields));
+  } catch (err: any) {
+    res.send(err);
+  }
+}
+
+export async function createProverbsHandler(
+  req: Request<{}, {}, CreateProverbsInput>,
+  res: Response
+) {
+  res.send("post new probs");
+}
+
+export async function deleteProverbHandler(
+  req: Request<{}, {}, {}, ProverbIdQueryInput>,
+  res: Response
+) {
+  try {
+    const proverb = await deleteProverbService({
+      authorId: res.locals.admin._id,
+      proverbId: req.query.proverbId,
+    });
+    if (!proverb) {
+      return res.send(`Proverb with ID:${req.query.proverbId} isnt' found`);
+    }
+    res.send(`Proverb with id: #${req.query.proverbId} was deleted.`);
+  } catch (err: any) {
+    return res.send(`Couldn't delete proverb with id: #${req.query.proverbId}`);
+  }
+}
+
+export async function editProverbHandler(
+  req: Request<{}, {}, CreateNewProverbInput, ProverbIdQueryInput>,
+  res: Response
+) {
+  try {
+    const proverb = await editProverbService({
+      proverbId: req.query.proverbId,
+      payload: req.body,
+    });
+    res.send(`Proverb #ID: ${proverb?.id} was updated`);
+  } catch (err: any) {
+    res.send("Couldn't update proverb");
+  }
+}

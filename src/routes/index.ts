@@ -10,10 +10,10 @@ const router = express.Router();
 /* Health check routes */
 router.get("/healthcheck", (_, res: Response) => res.sendStatus(200));
 
-router.use(proverb);
-router.use(submit);
-router.use(admin);
 router.use(auth);
+router.use(admin);
+router.use(submit);
+router.use(proverb);
 
 router.get("*", (_, res: Response, next: NextFunction) => {
   next(res.status(400).send("Resource not found"));

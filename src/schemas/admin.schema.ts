@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from "zod";
+import { object, string, TypeOf, array } from "zod";
 
 export const registerAdminSchema = object({
   body: object({
@@ -45,27 +45,6 @@ export const resetPasswordAdminSchema = object({
   }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
-  }),
-});
-
-export const createProverbSchema = object({
-  body: object({
-    proverb: string({ required_error: "Proverb not provided" }).min(
-      40,
-      "Characters seems too short"
-    ),
-    country: string({ required_error: "Country is required" }),
-    interpretation: string({ required_error: "Interpretation is required" }),
-    // translations: array
-  }),
-  params: object({
-    adminId: string({ required_error: "Admin Id not provided" }),
-  }),
-});
-
-export const deleteProverbSchema = object({
-  params: object({
-    proverbId: string(),
   }),
 });
 

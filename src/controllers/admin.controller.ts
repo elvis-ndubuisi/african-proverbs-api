@@ -11,6 +11,7 @@ import {
   findAdminByIdService,
 } from "../services/admin.service";
 import log from "../utils/logger.util";
+import lodash from "lodash";
 // Test
 import sendEmail from "../utils/mailer.util";
 
@@ -31,7 +32,7 @@ export async function registerAdminHandler(
   try {
     const admin = await createAdminService(body);
     await sendEmail({
-      from: "test@email.com",
+      from: "provictor.ie@gmail.com",
       to: admin.email,
       subject: "Please verify your account",
       text: `verification code ${admin.verificationCode} : id-${admin._id}`,
@@ -155,25 +156,5 @@ export async function resetPasswordAdminHandler(
  * @returns
  */
 export async function getCurrentAdminHandler(req: Request, res: Response) {
-  return res.locals.admin;
+  return res.send(lodash.omit(res.locals.admin, ["passwordResetCode"]));
 }
-
-/**
- * Authenticate admin login
- */
-
-/**
- * Create new proverb.
- */
-
-/**
- * Add multiple proverbs to data source
- */
-
-/**
- * Delete proverb from data source
- */
-
-/**
- * Edit proverb from data source
- */

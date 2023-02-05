@@ -9,12 +9,10 @@ const log = winston.createLogger({
         `${info.label} [${info.level.toUpperCase()}] - ${info.timestamp} : ${[
           info.message,
         ]}`
-    )
+    ),
+    winston.format.colorize({ all: true })
   ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ level: "error", filename: "error.log" }),
-  ],
+  transports: [new winston.transports.Console()],
 });
 
 export default log;

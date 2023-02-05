@@ -14,30 +14,35 @@ import {
   verifyAdminSchema,
 } from "../schemas/admin.schema";
 import deserializeAdmin from "../middlewares/deserializeAdmin.middleware";
+import getAdmin from "../middlewares/getAdmin.middleware";
 
 const router = express.Router();
 
-router.use(deserializeAdmin);
+// router.use(deserializeAdmin);
 router.post(
-  "/api/admins",
+  "/api/admin/register",
+  deserializeAdmin,
   validateResources(registerAdminSchema),
   registerAdminHandler
 );
 router.get(
-  "/auth/admin/verify/:id/:verificationCode",
+  "/api/admin/verify/:id/:verificationCode",
+  deserializeAdmin,
   validateResources(verifyAdminSchema),
   verifyAdminHandler
 );
 router.post(
-  "/auth/admin/forgot",
+  "/api/admin/forgotpassword",
+  deserializeAdmin,
   validateResources(forgotPasswordAdminSchema),
   forgotPasswordAdminHandler
 );
 router.post(
-  "/auth/admin/reset/:id/:resetPasswordCode",
+  "/api/admin/resetpassword/:id/:passwordResetCode",
+  deserializeAdmin,
   validateResources(resetPasswordAdminSchema),
   resetPasswordAdminHandler
 );
-router.get("/api/admin/me", getCurrentAdminHandler);
+router.get("/api/admin/me", deserializeAdmin, getAdmin, getCurrentAdminHandler);
 
 export default router;
