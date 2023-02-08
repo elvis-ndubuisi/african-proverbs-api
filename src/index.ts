@@ -4,6 +4,7 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import config from "config";
+import cookieParser from "cookie-parser";
 import connectMongo from "./utils/connectMongo.util";
 import express from "express";
 import helmet from "helmet";
@@ -20,6 +21,7 @@ async function bootStrap() {
   const httpServer = http.createServer(app);
 
   app.use(helmet());
+  app.use(cookieParser());
   app.use(express.json());
   // Create the apollo server
   const server = new ApolloServer({

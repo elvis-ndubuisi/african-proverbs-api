@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import config from "config";
 import {
   createNewProverbHandler,
   createProverbsHandler,
@@ -27,16 +29,17 @@ const apiLimiter = rateLimit({
   message: "Too many requests, try again after 5 minutes.",
 });
 
-router.get("/api/proverb", apiLimiter, getProverbHandler);
+router.get("/api/proverb", [cors(), apiLimiter], getProverbHandler);
 router.post(
   "/api/proverb/filter",
-  apiLimiter,
+  [cors(), apiLimiter],
   validateResources(proverbFilterQuerySchema),
   filterProverbHandler
 );
 router.get("/api/proverb/today", apiLimiter, todayProverbHandler);
 
 // Private routes
+router.use(cors({ origin: config.get("origin") }));
 router.use(deserializeAdmin);
 router.use(getAdmin);
 router.post(

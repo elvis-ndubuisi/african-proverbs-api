@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import config from "config";
 import {
   forgotPasswordAdminHandler,
   getCurrentAdminHandler,
@@ -15,7 +17,6 @@ import {
 } from "../schemas/admin.schema";
 import deserializeAdmin from "../middlewares/deserializeAdmin.middleware";
 import getAdmin from "../middlewares/getAdmin.middleware";
-
 const router = express.Router();
 
 // router.use(deserializeAdmin);
@@ -43,6 +44,12 @@ router.post(
   validateResources(resetPasswordAdminSchema),
   resetPasswordAdminHandler
 );
-router.get("/api/admin/me", deserializeAdmin, getAdmin, getCurrentAdminHandler);
+cors({ origin: config.get("origin") }),
+  router.get(
+    "/api/admin/me",
+    deserializeAdmin,
+    getAdmin,
+    getCurrentAdminHandler
+  );
 
 export default router;

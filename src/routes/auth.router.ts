@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import config from "config";
 import validateResources from "../middlewares/validateResource.middleware";
 import { createSessionSchema } from "../schemas/auth.schema";
 import {

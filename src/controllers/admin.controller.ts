@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import config from "config";
 import {
   ForgotPasswordAdminInput,
   RegisterAdminInput,
@@ -14,6 +15,7 @@ import log from "../utils/logger.util";
 import lodash from "lodash";
 // Test
 import sendEmail from "../utils/mailer.util";
+import { nanoid } from "nanoid";
 
 /**
  * Register Admin. Admin roles are assigned by default if non is provided.
@@ -32,16 +34,19 @@ export async function registerAdminHandler(
   try {
     const admin = await createAdminService(body);
     await sendEmail({
-      from: "provictor.ie@gmail.com",
       to: admin.email,
-      subject: "Please verify your account",
-      text: `verification code ${admin.verificationCode} : id-${admin._id}`,
+      subject: "Account Verification",
+      text: "Verify Account",
+      url: `${config.get("host")}/api/admin/verify/${admin._id}/${
+        admin.verificationCode
+      }`,
     });
     res.send("Admin was created");
   } catch (err: any) {
     if (err.code === 11000) {
       return res.status(409).send("account already exists");
     }
+    console.log(err);
     return res.status(500).send(err);
   }
 }
@@ -71,7 +76,11 @@ export async function verifyAdminHandler(
   if (admin.verificationCode === verificationCode) {
     admin.verified = true;
     await admin.save();
-    return res.send("admin successfully verified");
+    return res.send(
+      `admin successfully verified. <a href="${config.get(
+        "origin"
+      )}/auth/login">Proceed to login page</a>`
+    );
   }
 
   return res.send("Couldn't verify admin");
@@ -100,20 +109,21 @@ export async function forgotPasswordAdminHandler(
     return res.send("User is not verified");
   }
 
-  const passwordResetCode = "someidfromnano";
+  const passwordResetCode = nanoid();
   admin.passwordResetCode = passwordResetCode;
 
   await admin.save();
 
   //   Send email to Admin
   await sendEmail({
-    from: "test@email.com",
     to: admin.email,
-    subject: "Reset your password",
-    text: `Password reset code ${passwordResetCode} : id : ${admin._id}`,
+    subject: "Reset Password",
+    text: "Reset your password",
+    url: `${config.get("host")}/api/admin/resetpassword/${
+      admin._id
+    }/${passwordResetCode}`,
   });
 
-  log.debug(`Password reset email sent to ${admin.email}`);
   return res.send("A message has been sent to your mail");
 }
 
@@ -148,7 +158,11 @@ export async function resetPasswordAdminHandler(
 
   await admin.save();
 
-  return res.send("Password updated successfully");
+  return res.send(
+    `Password updated successfully. Proceed to <a href="${config.get(
+      "origin"
+    )}/auth/login">Login</a>`
+  );
 }
 
 /**

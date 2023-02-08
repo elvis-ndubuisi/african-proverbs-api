@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import config from "config";
 import {
   approveSubmittedProverbHandler,
   disapprovedSubmittedProverbHandler,
@@ -17,6 +19,7 @@ const router = express.Router();
 
 router.post(
   "/api/submit",
+  cors(),
   validateResources(submitProverbSchema),
   submitProverbHandler
 );
@@ -27,13 +30,13 @@ router.get(
 );
 router.post(
   "/api/submit/approve/:submitId",
-  [deserializeAdmin, getAdmin],
+  [cors({ origin: config.get("origin") }), deserializeAdmin, getAdmin],
   validateResources(submitProverbIdSchema),
   approveSubmittedProverbHandler
 );
 router.delete(
   "/api/submit/disappprove/:submitId",
-  [deserializeAdmin, getAdmin],
+  [cors({ origin: config.get("origin") }), deserializeAdmin, getAdmin],
   validateResources(submitProverbIdSchema),
   disapprovedSubmittedProverbHandler
 );
