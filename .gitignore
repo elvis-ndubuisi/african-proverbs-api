@@ -2,7 +2,7 @@
 .env*
 
 # Build folder
-/dist
+# /dist
 /build
 
 # Logs
