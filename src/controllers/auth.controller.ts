@@ -38,7 +38,7 @@ export async function createSessionHandler(
 }
 
 export async function refreshAccessTokenHandler(req: Request, res: Response) {
-  const refreshToken = lodash.get(req, "headers.x-refresh");
+  const refreshToken = lodash.get(req, "headers.x-refresh") as string;
 
   const decoded = verifyJwt<{ session: string }>(
     refreshToken,

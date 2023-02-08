@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "npx tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start": "node ./dist/index.js"
+    "start": "npm run compile && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",

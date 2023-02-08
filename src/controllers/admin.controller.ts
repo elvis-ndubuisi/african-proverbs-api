@@ -161,7 +161,7 @@ export async function resetPasswordAdminHandler(
   return res.send(
     `Password updated successfully. Proceed to <a href="${config.get(
       "origin"
-    )}/auth/login">Login</a>`
+    )}/auth/login">Login Page</a>`
   );
 }
 
