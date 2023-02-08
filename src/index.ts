@@ -42,7 +42,7 @@ async function bootStrap() {
 
   app.use(routes);
 
-  const port = config.get<string>("port");
+  const port = config.get<string>("port") || 4000;
   // app.listen on express server
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: port }, resolve)

@@ -1,5 +1,5 @@
 export default {
-  port: 4000,
+  port: "",
   host: "http://localhost:4000",
   // accessTokenPrivateKey: "",
   // refreshTokenPrivateKey: "",
