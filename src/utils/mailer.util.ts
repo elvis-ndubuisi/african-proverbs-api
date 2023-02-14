@@ -2,14 +2,23 @@ import config from "config";
 import nodemailer, { SendMailOptions } from "nodemailer";
 import log from "./logger.util";
 
-let transport = nodemailer.createTransport({
-  host: config.get<string>("mail_host"),
-  port: config.get<number>("mail_port"),
-  auth: {
-    user: config.get("mail_user"),
-    pass: config.get("mail_pass"),
-  },
-});
+let transport =
+  process.env.NODE_ENV === "development"
+    ? nodemailer.createTransport({
+        host: config.get<string>("mail_host"),
+        port: config.get<number>("mail_port"),
+        auth: {
+          user: config.get("mail_user"),
+          pass: config.get("mail_pass"),
+        },
+      })
+    : nodemailer.createTransport({
+        service: config.get<string>("mail_service"),
+        auth: {
+          user: config.get("mail_user"),
+          pass: config.get("mail_pass"),
+        },
+      });
 
 transport.verify((err, success) => {
   if (err) {

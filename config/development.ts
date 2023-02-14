@@ -6,4 +6,5 @@ export default {
   mail_user: process.env.DEV_MAIL_USER,
   mail_pass: process.env.DEV_MAIL_PASS,
   mail_sender: "testmailer.ie@gmail.com",
+  host: "http://localhost:4000",
 };

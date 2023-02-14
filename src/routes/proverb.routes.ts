@@ -29,14 +29,22 @@ const apiLimiter = rateLimit({
   message: "Too many requests, try again after 5 minutes.",
 });
 
-router.get("/api/proverb", [cors(), apiLimiter], getProverbHandler);
+router.get(
+  "/api/proverb",
+  [cors({ origin: "*" }), apiLimiter],
+  getProverbHandler
+);
 router.post(
   "/api/proverb/filter",
-  [cors(), apiLimiter],
+  [cors({ origin: "*" }), apiLimiter],
   validateResources(proverbFilterQuerySchema),
   filterProverbHandler
 );
-router.get("/api/proverb/today", apiLimiter, todayProverbHandler);
+router.get(
+  "/api/proverb/today",
+  [cors({ origin: "*" }), apiLimiter],
+  todayProverbHandler
+);
 
 // Private routes
 router.use(cors({ origin: config.get("origin") }));

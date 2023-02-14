@@ -44,12 +44,6 @@ router.post(
   validateResources(resetPasswordAdminSchema),
   resetPasswordAdminHandler
 );
-cors({ origin: config.get("origin") }),
-  router.get(
-    "/api/admin/me",
-    deserializeAdmin,
-    getAdmin,
-    getCurrentAdminHandler
-  );
+router.get("/api/admin/me", deserializeAdmin, getAdmin, getCurrentAdminHandler);
 
 export default router;

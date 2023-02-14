@@ -33,7 +33,11 @@ async function bootStrap() {
   await server.start();
 
   // apply middleware to server
-  app.use("/graphql", cors<cors.CorsRequest>(), expressMiddleware(server));
+  app.use(
+    "/graphql",
+    cors<cors.CorsRequest>({ origin: "*" }),
+    expressMiddleware(server)
+  );
 
   app.use(routes);
 
