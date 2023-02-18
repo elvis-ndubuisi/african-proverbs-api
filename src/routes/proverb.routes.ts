@@ -31,18 +31,18 @@ const apiLimiter = rateLimit({
 
 router.get(
   "/api/proverb",
-  [cors({ origin: "*" }), apiLimiter],
+  [cors({ origin: "*", methods: ["GET"] }), apiLimiter],
   getProverbHandler
 );
-router.post(
+router.get(
   "/api/proverb/filter",
-  [cors({ origin: "*" }), apiLimiter],
+  [cors({ origin: "*", methods: ["GET"] }), apiLimiter],
   validateResources(proverbFilterQuerySchema),
   filterProverbHandler
 );
 router.get(
   "/api/proverb/today",
-  [cors({ origin: "*" }), apiLimiter],
+  [cors({ origin: "*", methods: ["GET"] }), apiLimiter],
   todayProverbHandler
 );
 

@@ -19,13 +19,13 @@ const router = express.Router();
 
 router.post(
   "/api/submit",
-  cors(),
+  cors({ origin: "https://africanproverbs.vercel.app", methods: ["GET"] }),
   validateResources(submitProverbSchema),
   submitProverbHandler
 );
 router.get(
   "/api/submit",
-  [deserializeAdmin, getAdmin],
+  [cors({ origin: config.get("origin") }), deserializeAdmin, getAdmin],
   getSubmittedProverbsHandler
 );
 router.post(
