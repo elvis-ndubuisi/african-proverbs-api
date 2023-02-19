@@ -21,20 +21,37 @@ export async function createSessionHandler(
 
   const admin = await findAdminByEmailService(email);
 
-  if (!admin) return res.send(message);
+  if (!admin) return res.status(401).send(message);
 
-  if (!admin.verified) return res.send("Please verify your email");
+  if (!admin.verified) return res.status(200).send("Please verify your email");
 
   const isValid = await admin.validatePassword(password);
 
-  if (!isValid) return res.send(message);
+  if (!isValid) return res.status(401).send(message);
 
   //   Sign access token
   const accessToken = signAccessTokenService(admin);
   //   Sign refresh token
   const refreshToken = await signRefreshTokenService({ adminId: admin._id });
+  // Set Cookies
+  res.cookie("access-token", accessToken, {
+    maxAge: 900000, // 15mins
+    httpOnly: true,
+    domain: "localhost",
+    path: "/",
+    sameSite: "strict",
+    secure: false,
+  });
+  res.cookie("refresh-token", refreshToken, {
+    maxAge: 3.154e10, // 1yr
+    httpOnly: true,
+    domain: "localhost",
+    path: "/",
+    sameSite: "strict",
+    secure: false,
+  });
   //   Send tokens
-  return res.send({ accessToken, refreshToken });
+  return res.status(200).send({ accessToken, refreshToken });
 }
 
 export async function refreshAccessTokenHandler(req: Request, res: Response) {
@@ -63,5 +80,5 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
 
   const accessToken = signAccessTokenService(admin);
 
-  return res.send({ accessToken });
+  return res.status(200).send({ accessToken });
 }

@@ -41,12 +41,12 @@ export async function registerAdminHandler(
         admin.verificationCode
       }`,
     });
-    res.send("Admin was created");
+    res.status(201).send("Admin was created");
   } catch (err: any) {
     if (err.code === 11000) {
       return res.status(409).send("account already exists");
     }
-    console.log(err);
+    // console.log(err);
     return res.status(500).send(err);
   }
 }
@@ -67,23 +67,25 @@ export async function verifyAdminHandler(
   const admin = await findAdminByIdService(id);
 
   //   check to see if admin is registered
-  if (!admin) return res.send("Couldn't verify user");
+  if (!admin) return res.status(404).send("Couldn't verify user");
 
   //   check to see if admin is already verified
-  if (admin.verified) return res.send("admin is already verified");
+  if (admin.verified) return res.status(409).send("admin is already verified");
 
   // check to see if the verification code matched
   if (admin.verificationCode === verificationCode) {
     admin.verified = true;
     await admin.save();
-    return res.send(
-      `admin successfully verified. <a href="${config.get(
-        "origin"
-      )}/auth/login">Proceed to login page</a>`
-    );
+    return res
+      .status(200)
+      .send(
+        `admin successfully verified. <a href="${config.get(
+          "origin"
+        )}/auth/login">Proceed to login page</a>`
+      );
   }
 
-  return res.send("Couldn't verify admin");
+  return res.status(500).send("Couldn't verify admin");
 }
 
 /**
@@ -102,11 +104,11 @@ export async function forgotPasswordAdminHandler(
 
   if (!admin) {
     log.debug(`Admin with email: ${email} doesn't exists`);
-    return res.send("A message has been sent to your mail");
+    return res.status(200).send("A message has been sent to your mail");
   }
 
   if (!admin?.verified) {
-    return res.send("User is not verified");
+    return res.status(200).send("User is not verified");
   }
 
   const passwordResetCode = nanoid();
@@ -124,7 +126,7 @@ export async function forgotPasswordAdminHandler(
     }/${passwordResetCode}`,
   });
 
-  return res.send("A message has been sent to your mail");
+  return res.status(201).send("A message has been sent to your mail");
 }
 
 /**
@@ -143,32 +145,42 @@ export async function resetPasswordAdminHandler(
   const { id, passwordResetCode } = req.params;
   const { password } = req.body;
 
-  const admin = await findAdminByIdService(id);
+  try {
+    const admin = await findAdminByIdService(id);
 
-  if (
-    !admin ||
-    !admin.passwordResetCode ||
-    admin.passwordResetCode !== passwordResetCode
-  ) {
-    return res.status(400).send("couldn't reset your password");
+    if (
+      !admin ||
+      !admin.passwordResetCode ||
+      admin.passwordResetCode !== passwordResetCode
+    ) {
+      return res.status(400).send("couldn't reset your password");
+    }
+
+    admin.passwordResetCode = null;
+    admin.password = password;
+
+    await admin.save();
+
+    return res
+      .status(200)
+      .send(
+        `Password updated successfully. Proceed to <a href="${config.get(
+          "origin"
+        )}/auth/login">Login Page</a>`
+      );
+  } catch (err: any) {
+    res.status(500).send("Internal server error");
   }
-
-  admin.passwordResetCode = null;
-  admin.password = password;
-
-  await admin.save();
-
-  return res.send(
-    `Password updated successfully. Proceed to <a href="${config.get(
-      "origin"
-    )}/auth/login">Login Page</a>`
-  );
 }
 
 /**
  * Gets details of currently logged in admin.
- * @returns
+ * @returns Admin detals object.
  */
-export async function getCurrentAdminHandler(req: Request, res: Response) {
-  return res.send(lodash.omit(res.locals.admin, ["passwordResetCode"]));
+export async function getCurrentAdminHandler(_: Request, res: Response) {
+  try {
+    res.status(200).send(lodash.omit(res.locals.admin, ["passwordResetCode"]));
+  } catch (err: any) {
+    res.status(500).send("Internal server error");
+  }
 }

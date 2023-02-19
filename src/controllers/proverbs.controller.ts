@@ -13,7 +13,6 @@ import {
 } from "../services/proverbs.service";
 import lodash from "lodash";
 import { privateFields } from "../models/proverb.model";
-import log from "../utils/logger.util";
 
 /**
  * Get a random proverb.
@@ -22,7 +21,7 @@ import log from "../utils/logger.util";
 export async function getProverbHandler(_: Request, res: Response) {
   try {
     const proverb = await getProverbService({});
-    res.send(lodash.omit(proverb[0], privateFields));
+    res.status(200).send(lodash.omit(proverb[0], privateFields));
   } catch (err: any) {
     return res.status(500).send(err);
   }
@@ -38,9 +37,9 @@ export async function filterProverbHandler(
 ) {
   try {
     const proverb = await getProverbService({ filter: req.query.filter });
-    res.send(lodash.omit(proverb[0], privateFields));
+    res.status(200).send(lodash.omit(proverb[0], privateFields));
   } catch (err: any) {
-    res.send(err);
+    res.status(500).send(err);
   }
 }
 
@@ -68,9 +67,9 @@ export async function createNewProverbHandler(
       req.body,
       res.locals.admin._id
     );
-    res.json(lodash.omit(proverb.toJSON(), privateFields));
+    res.status(200).json(lodash.omit(proverb.toJSON(), privateFields));
   } catch (err: any) {
-    res.send(err);
+    res.status(500).send(err);
   }
 }
 
@@ -91,11 +90,17 @@ export async function deleteProverbHandler(
       proverbId: req.query.proverbId,
     });
     if (!proverb) {
-      return res.send(`Proverb with ID:${req.query.proverbId} isnt' found`);
+      return res
+        .status(404)
+        .send(`Proverb with ID:${req.query.proverbId} isnt' found`);
     }
-    res.send(`Proverb with id: #${req.query.proverbId} was deleted.`);
+    res
+      .status(200)
+      .send(`Proverb with id: #${req.query.proverbId} was deleted.`);
   } catch (err: any) {
-    return res.send(`Couldn't delete proverb with id: #${req.query.proverbId}`);
+    return res
+      .status(500)
+      .send(`Couldn't delete proverb with id: #${req.query.proverbId}`);
   }
 }
 

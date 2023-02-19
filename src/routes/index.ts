@@ -12,8 +12,8 @@ const router = express.Router();
 /* Health check routes */
 router.get("/healthcheck", (_, res: Response) => res.sendStatus(200));
 
-router.use(cors({ origin: config.get("origin") }), auth);
-router.use(cors({ origin: config.get("origin") }), admin);
+router.use(cors({ origin: config.get("origin"), credentials: true }), auth);
+router.use(cors({ origin: config.get("origin"), credentials: true }), admin);
 router.use(submit);
 router.use(proverb);
 

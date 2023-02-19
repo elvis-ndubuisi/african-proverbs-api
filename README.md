@@ -1,10 +1,28 @@
 # African Proverbs
 
-### TODO 🖊️
+## Features
 
-- [ ] Handle approval of submitted proverb.
-- [ ] Post submitted proverb to twitter handle.
-- [ ] Format sent emails to include password reset and verification endpoints.
-- [ ] Handle Admin Mgt.
-- [ ] Handle CORs for specific routes.
-- [ ] FIX: proverb field in proverb model isn't respecting { unique: true}.
+- Caching (Redis).
+- Email Services.
+- JWT Role Based Authentication & Authorization.
+- Cookie Management.
+- Schema Validation.
+- Safe Typing.
+- Cron Jobs.
+- Rate Limiting.
+- RESTful Endpoints.
+- GraphQL Query Operations
+- C.R.U.D Operations.
+
+## Integrations
+
+- Gmail (email service for production).
+- MailTrap (email service for development).
+- Nodemailer.
+- Redis (caching).
+- MongoDB (primary database).
+- Twitter API.
+
+## RESTful Endpoints
+
+## GraphQL

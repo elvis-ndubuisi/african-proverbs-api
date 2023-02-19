@@ -24,7 +24,10 @@ export async function submitProverbHandler(
     }
     res.sendStatus(200);
   } catch (err: any) {
-    res.send(err);
+    if (err?.code === 11000) {
+      return res.status(409).send("proverb already exists");
+    }
+    res.status(500).send("Internal server error");
   }
 }
 
@@ -46,10 +49,11 @@ export async function approveSubmittedProverbHandler(
       submitId: req.params.submitId,
       authorId: res.locals.admin._id,
     });
-    if (!submitted) return res.send("something went wrong");
-    res.send("Proverb approved");
+    if (!submitted)
+      return res.status(404).send("couldn't approve submitted payload"); // Unable to approved submit.
+    res.status(200).send("Proverb approved");
   } catch (err: any) {
-    res.send("Proverb not approved");
+    res.status(500).send("Proverb not approved");
   }
 }
 
@@ -66,6 +70,6 @@ export async function disapprovedSubmittedProverbHandler(
     res.send("Proverb removed");
   } catch (err: any) {
     log.error(err);
-    res.send("Couldn't delete specified proverb");
+    res.status(500).send("Couldn't delete specified proverb");
   }
 }
