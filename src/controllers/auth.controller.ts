@@ -25,41 +25,44 @@ export async function createSessionHandler(
   const message = "Invalid email or password";
   const { email, password } = req.body;
 
-  const admin = await findAdminByEmailService(email);
+  try {
+    const admin = await findAdminByEmailService(email);
 
-  if (!admin) return res.status(401).send(message);
+    if (!admin) return res.status(401).send(message);
 
-  if (!admin.verified) return res.status(200).send("Please verify your email");
+    if (!admin.verified)
+      return res.status(200).send("Please verify your email");
 
-  const isValid = await admin.validatePassword(password);
+    const isValid = await admin.validatePassword(password);
 
-  if (!isValid) return res.status(401).send(message);
+    if (!isValid) return res.status(401).send(message);
 
-  //   Sign access token
-  const accessToken = signAccessTokenService(admin);
-  //   Sign refresh token
-  const refreshToken = await signRefreshTokenService({ adminId: admin._id });
-  // Set Cookies - access and refresh
-  res.cookie("access-token", accessToken, {
-    maxAge: 900000, // 15mins
-    httpOnly: true,
-    domain: config.get<string>("host"),
-    // domain: 'localhost', // Only use in development
-    path: "/",
-    sameSite: "strict",
-    secure: config.get<boolean>("secure_cookie"),
-  });
-  res.cookie("refresh-token", refreshToken, {
-    maxAge: 3.154e10, // 1yr
-    httpOnly: true,
-    domain: config.get<string>("host"),
-    // domain: 'localhost', // Only use in development
-    path: "/",
-    sameSite: "strict",
-    secure: config.get<boolean>("secure_cookie"),
-  });
-  //   Send tokens
-  return res.status(200).send({ accessToken, refreshToken });
+    //   Sign access token
+    const accessToken = signAccessTokenService(admin);
+    //   Sign refresh token
+    const refreshToken = await signRefreshTokenService({ adminId: admin._id });
+    // Set Cookies - access and refresh
+    res.cookie("access-token", accessToken, {
+      maxAge: 900000, // 15mins
+      httpOnly: true,
+      domain: config.get<string>("host"),
+      // domain: 'localhost', // Only use in development
+      path: "/",
+      sameSite: "strict",
+      secure: config.get<boolean>("secure_cookie"),
+    });
+    res.cookie("refresh-token", refreshToken, {
+      maxAge: 3.154e10, // 1yr
+      httpOnly: true,
+      domain: config.get<string>("host"),
+      // domain: 'localhost', // Only use in development
+      path: "/",
+      sameSite: "strict",
+      secure: config.get<boolean>("secure_cookie"),
+    });
+    //   Send tokens
+    return res.status(200).send({ accessToken, refreshToken });
+  } catch (error) {}
 }
 
 /**
