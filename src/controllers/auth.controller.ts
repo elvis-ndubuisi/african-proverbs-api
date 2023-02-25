@@ -31,7 +31,7 @@ export async function createSessionHandler(
     if (!admin) return res.status(401).send(message);
 
     if (!admin.verified)
-      return res.status(200).send("Please verify your email");
+      return res.status(403).send("Please verify your email");
 
     const isValid = await admin.validatePassword(password);
 
@@ -62,7 +62,9 @@ export async function createSessionHandler(
     });
     //   Send tokens
     return res.status(200).send({ accessToken, refreshToken });
-  } catch (error) {}
+  } catch (error: any) {
+    res.sendStatus(500);
+  }
 }
 
 /**
