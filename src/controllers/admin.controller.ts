@@ -13,7 +13,6 @@ import {
 } from "../services/admin.service";
 import log from "../utils/logger.util";
 import lodash from "lodash";
-// Test
 import sendEmail from "../utils/mailer.util";
 import { nanoid } from "nanoid";
 
@@ -46,7 +45,7 @@ export async function registerAdminHandler(
     if (err.code === 11000) {
       return res.status(409).send("account already exists");
     }
-    // console.log(err);
+    log.error(err);
     return res.status(500).send(err);
   }
 }
@@ -85,6 +84,7 @@ export async function verifyAdminHandler(
       );
   }
 
+  // Handle error
   return res.status(500).send("Couldn't verify admin");
 }
 
@@ -103,7 +103,6 @@ export async function forgotPasswordAdminHandler(
   const admin = await findAdminByEmailService(email);
 
   if (!admin) {
-    log.debug(`Admin with email: ${email} doesn't exists`);
     return res.status(200).send("A message has been sent to your mail");
   }
 

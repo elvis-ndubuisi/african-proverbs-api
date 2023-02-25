@@ -6,4 +6,5 @@ export default {
   mail_pass: process.env.MAIL_PASS,
   mail_sender: process.env.MAIL_USER,
   host: "https://africanproverbs.onrender.com",
+  secure_cookie: true,
 };

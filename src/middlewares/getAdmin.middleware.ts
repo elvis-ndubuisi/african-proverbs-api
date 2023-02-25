@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import log from "../utils/logger.util";
 
 const getAdmin = (req: Request, res: Response, next: NextFunction) => {
   const admin = res.locals.admin;
