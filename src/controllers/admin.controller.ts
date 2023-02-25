@@ -42,7 +42,7 @@ export async function registerAdminHandler(
     });
     res.status(201).send("Admin was created");
   } catch (err: any) {
-    if (err.code === 11000) {
+    if (err?.code === 11000) {
       return res.status(409).send("account already exists");
     }
     log.error(err);
