@@ -104,6 +104,7 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
     maxAge: 900000, // 15mins
     httpOnly: true,
     domain: config.get<string>("host"),
+    // domain: 'localhost', // Only use in development
     path: "/",
     sameSite: "strict",
     secure: config.get<boolean>("secure_cookie"),
