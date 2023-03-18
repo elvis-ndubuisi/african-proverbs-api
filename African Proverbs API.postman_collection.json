@@ -1,0 +1,676 @@
+{
+	"info": {
+		"_postman_id": "41a89b96-7bfe-4bdb-b911-69305ce6be57",
+		"name": "African Proverbs API",
+		"description": "# African Proverbs API Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\":\"elvis ndubuisi\",\r\n  \"email\":\"provictor.ie@gmail.com\",\r\n  \"password\":\"password\",\r\n  \"confirmPassword\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/admin/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/admin/verify/:id/:verificationCode",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"verify",
+								":id",
+								":verificationCode"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "63df67c09323be001da706e8"
+								},
+								{
+									"key": "verificationCode",
+									"value": "BK1t8JKP7Pjm5V3V8xbK9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"provictor.ie@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/admin/forgotpassword",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"forgotpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"password\",\r\n    \"confirmPassword\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/admin/resetpassword/:id/:passwordResetCode",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"resetpassword",
+								":id",
+								":passwordResetCode"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "63df67c09323be001da706e8"
+								},
+								{
+									"key": "passwordResetCode",
+									"value": "someidfromnano"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTU4NTg4OCwiZXhwIjoxNjc1NTg3Njg4fQ.ZEpuR1oevw53fmwq3PnVlWtksBGLtX0HY38rcGqxsDNyJBbz-HkE6PwgpkPnHE1gKRpLNfUpl5e2CpBmkrtcE34mGevzFwNIkYq7ewjjrW_gicazqXlP_k4YPM0gaHvFw42bsj-ePl2IfOKH06NVlHmGogAihFSO4LJE76lY5q_mC90u7-T503D8Ty_XoenyNlgfAz2freZSN5WvLovM7n9Xao2JiyNVz1b_uMRx83DOTs8t9vF0GWuxpHzVKkriTk2uA84eL1kZ3AzGnGcxQ4OFhPrtvjTdizTniWbcDAM64yRmFN6YrxWD9ZausXRJtvHuVgnvOyPKJjb0cGN5HQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/admin/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proverb",
+			"item": [
+				{
+					"name": "Proverb",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/proverb",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Proverb of Today",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/proverb/today",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb",
+								"today"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Proverb",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/proverb/filter?filter=country",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "country"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Proverb",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTU5MDEzOSwiZXhwIjoxNjc1NTkxOTM5fQ.UulZhz6AXY5AYpbgjHBDd3aBRAT4yy-8r6PapJeD3RYKtkZ4UiXMJUpSbbXMgTK7d_Yl28BeUS4x6XDZn0Pe4a_v84kkTweKZnW_Lb-PnCNvBjVdzZg_t_if0Il6j3NkT15NUu0grjqwdmOYjj-I4XNDq-49vU3tRfM9QVCwNx7Io8TwaEQolQfqMa87Pvae6y-DzJzc6bE0OMQpF_TIOXky_y23zFsFRc9-3k_o_fNzUxerP7uk1a0svO_C02dQmQVx6jQpFN9UKNijP87y9NpUlIdXXjG1q8Ut9Pgp46QHxZIfhtDMRU344GX030MSiKEhM_Gmo0qTqmuC1mNI-Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"proverb\":\"create new proverb\",\r\n  \"country\":\"country\",\r\n  \"interpretation\":\"interpretation\",\r\n  \"native\":\"native\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/proverb",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Proverb",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTU5MDEzOSwiZXhwIjoxNjc1NTkxOTM5fQ.UulZhz6AXY5AYpbgjHBDd3aBRAT4yy-8r6PapJeD3RYKtkZ4UiXMJUpSbbXMgTK7d_Yl28BeUS4x6XDZn0Pe4a_v84kkTweKZnW_Lb-PnCNvBjVdzZg_t_if0Il6j3NkT15NUu0grjqwdmOYjj-I4XNDq-49vU3tRfM9QVCwNx7Io8TwaEQolQfqMa87Pvae6y-DzJzc6bE0OMQpF_TIOXky_y23zFsFRc9-3k_o_fNzUxerP7uk1a0svO_C02dQmQVx6jQpFN9UKNijP87y9NpUlIdXXjG1q8Ut9Pgp46QHxZIfhtDMRU344GX030MSiKEhM_Gmo0qTqmuC1mNI-Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"proverb\":\"updated proverb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/proverb/modify?proverbId=63de7596497fc2d5b79e0dbf",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb",
+								"modify"
+							],
+							"query": [
+								{
+									"key": "proverbId",
+									"value": "63de7596497fc2d5b79e0dbf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Proverb",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTU5MDEzOSwiZXhwIjoxNjc1NTkxOTM5fQ.UulZhz6AXY5AYpbgjHBDd3aBRAT4yy-8r6PapJeD3RYKtkZ4UiXMJUpSbbXMgTK7d_Yl28BeUS4x6XDZn0Pe4a_v84kkTweKZnW_Lb-PnCNvBjVdzZg_t_if0Il6j3NkT15NUu0grjqwdmOYjj-I4XNDq-49vU3tRfM9QVCwNx7Io8TwaEQolQfqMa87Pvae6y-DzJzc6bE0OMQpF_TIOXky_y23zFsFRc9-3k_o_fNzUxerP7uk1a0svO_C02dQmQVx6jQpFN9UKNijP87y9NpUlIdXXjG1q8Ut9Pgp46QHxZIfhtDMRU344GX030MSiKEhM_Gmo0qTqmuC1mNI-Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/proverb/delete?proverbId=63de759a497fc2d5b79e0dc1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "proverbId",
+									"value": "63de759a497fc2d5b79e0dc1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Proverbs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/proverb/proverbs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"proverb",
+								"proverbs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login - Create Session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\":\"provictor.ie@gmail.com\",\r\n  \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/sessions",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTU5ODU4OSwiZXhwIjoxNjc1NjAwMzg5fQ.NxhPuUZhGGOdZrXaFq_1yiH8KaRgMQm_rSF6ZzGRoBcM9B5xkyOxEByqRx9lZE-K9bDofbvxhitT96fUr-p5RTC1wUH2TFoUGETTg7FfU60W512JFA3Ptd7TJMl6UpYUJCCf7lMqFuL72XqQzB4MdpnlRuDlYMt5DT3II2beqEIuqoDMx0SHuCLNVIh2zXu91fVrOlRP0afmjMCUuiHWNx5scVQuGZGKKLVECqClUYVD-PkiEs3GcCCn6sAJFWlCDl5ZeEayEP5CydSD5aKkrgDP8_YL1CmOgHHet9uX-lybM23TchOGJqEaW3x-brOKLa0sJfkIKpmb0b7kzk3ZwA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-refresh",
+								"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uIjoiNjNkZmEyNmE4NDZlMDU5ZGQ4NTc2ZWVmIiwiaWF0IjoxNjc1NjAwNDkxLCJleHAiOjE3MDcxNTgwOTF9.ZiEfFzfEkiPygTvJrpvuzkOxQ4k8Cad4IYJu3kHpG5JamUUbetRZ9565xR5SdoQA5mprAnoODL3VTNR9jx58hKhE0sgeS_c1ujyO9YUSqzE2bwMbATfJeIAyCQEvd6jqUTlMyBujZhvH1zqvasVsX7jkZuvQ7d03LRdX06yAFD9ePq265m_lywubjEjzZzAWrW07K65dCRR0huyW0VaE6KpYBhsNlO_j_ijnLG1vbt7j4fMEiP3gchkfb3Xf6GaHD-hKRxWRrGtR1mhMgUbRhHdVCPR_7jkbvIHnu7p59SvojRsCoq8_sWW5QG5Z81IB85935w2itSEho0XMLQC9OQ",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/sessions/refresh",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/sessions/logout",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Submit",
+			"item": [
+				{
+					"name": "Submit Proverb",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"name\",\r\n  \"country\": \"country\",\r\n  \"proverb\": \"domidsn2sdfadf2oes3\",\r\n  \"native\":\"native value\",\r\n  \"interpretation\": \"interpretation\",\r\n  \"translations\": [{\"dialect\":\"teso\", \"proverb\":\"teso proverb\"}, {\"dialect\": \"teso 2\", \"proverb\": \"teso2\"}],\r\n  \"twitterHandle\":\"lloosdaif\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/submit",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"submit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Submitted Proverbs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTYwMjM5NiwiZXhwIjoxNjc1NjA0MTk2fQ.JIm-qUUO-3O2B4uq7CPJdNVpZ-_8LxusaMBdbIWWjLUPybnHKLP3AGICnzUC4ILMVVCEiR_2tMH-hXRkXTEzydxTqGg4ESH4ASEGWIompgxst60831J6qreZ1RJ89jfbpxNL3GrzThoDwjvQeLVxD2KPNm6JopS2_oa8TcpeRO1HMNn556krm8qE5bx_tWQnoecRqmlE_D33Oh4GALvRwrC3s-0xVkSGb-FjKacDek7z8RAfawlloBy8cqIFcnT8CS94v-qegjSgiARW83E1389uFaIcqxxGEtHHjyMtSgA9OWDdsvc46nv7EuV7_H7b_IEJNjp0evr0gLrazdDODw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/submit",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"submit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Submit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTYwMDQ5MCwiZXhwIjoxNjc1NjAyMjkwfQ.W4mj3ikRjXLoTdQPJoZOVRzESIaWuWehb1b7WDJYV3zfhTPYP9jnXwUz9IT4YHz8VPVuMPHOrloiHrAhTtmI6qjDUarzb6DbkRM8pv1cB9UpXn081PHTjgj8WmjY9hpG-wAO9kJGCnphmHzaXOqyBJqrUPiWF9rQNr7xqxMZkbGBnIULSveBmYkXYk7TapXQo6dKErKp1TC9qcvQdpYGppmz32kSogGrBo5cTcVi5cC8rbsab9Igp7pd0IodvtD4qYI-pGliCRRd4Z1TN1kDhhckUs64Mq3XwjpE0EPLR-R1lOr7VD_lqh8fAYzwaxlU8Arysrq9mUoMFwhGyqf2fw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/submit/approve/:submitId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"submit",
+								"approve",
+								":submitId"
+							],
+							"variable": [
+								{
+									"key": "submitId",
+									"value": "63dfa62118122303b40ed32f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disapprove Submit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2RmNjdjMDkzMjNiZTAwMWRhNzA2ZTgiLCJ1c2VybmFtZSI6ImVsdmlzIG5kdWJ1aXNpIiwiZW1haWwiOiJwcm92aWN0b3IuaWVAZ21haWwuY29tIiwicm9sZSI6ImNvbnRyaWJ1dG9yIiwiY3JlYXRlZEF0IjoiMjAyMy0wMi0wNVQwODoyNDozMi44OTFaIiwidXBkYXRlZEF0IjoiMjAyMy0wMi0wNVQwODozMDo1My4xODdaIiwicGFzc3dvcmRSZXNldENvZGUiOm51bGwsImlhdCI6MTY3NTYwMjM5NiwiZXhwIjoxNjc1NjA0MTk2fQ.JIm-qUUO-3O2B4uq7CPJdNVpZ-_8LxusaMBdbIWWjLUPybnHKLP3AGICnzUC4ILMVVCEiR_2tMH-hXRkXTEzydxTqGg4ESH4ASEGWIompgxst60831J6qreZ1RJ89jfbpxNL3GrzThoDwjvQeLVxD2KPNm6JopS2_oa8TcpeRO1HMNn556krm8qE5bx_tWQnoecRqmlE_D33Oh4GALvRwrC3s-0xVkSGb-FjKacDek7z8RAfawlloBy8cqIFcnT8CS94v-qegjSgiARW83E1389uFaIcqxxGEtHHjyMtSgA9OWDdsvc46nv7EuV7_H7b_IEJNjp0evr0gLrazdDODw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/submit/disappprove/:submitId",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"submit",
+								"disappprove",
+								":submitId"
+							],
+							"variable": [
+								{
+									"key": "submitId",
+									"value": "63dfa62618122303b40ed331"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/healthcheck",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GraphQl",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:4000",
+			"type": "default"
+		}
+	]
+}
