@@ -16,7 +16,7 @@ export const privateFields = [
   "__v",
   "verificationCode",
   "passwordRestCode",
-  "verified",
+  "verificationCode",
 ];
 
 @pre<Admin>("save", async function () {

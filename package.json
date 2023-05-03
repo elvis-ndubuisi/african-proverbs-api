@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start": "tsc && node ./dist/src/index.js"
+    "start": "tsc && node ./dist/src/index.js",
+    "remap": "ts-node-dev ./playground/remap.ts"
   },
   "keywords": [],
   "author": "",
