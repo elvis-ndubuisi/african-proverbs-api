@@ -35,7 +35,7 @@ function shuffleAndRemap(array: Adage[]) {
                 proverb: arr[1],
               };
             })
-          : {},
+          : [],
       country: uniqueTo,
     };
   });

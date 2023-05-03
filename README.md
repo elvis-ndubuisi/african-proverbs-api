@@ -29,7 +29,21 @@ Curated list of african proverbs 🦁
 
 ### **🚟 REST API**
 
-working on it
+- **Fetch a random proverb**
+  - _GET_ Method
+  - Return proverb object
+
+```curl
+https://localhost:5000/api/proverb
+```
+
+- **Fetch a random proverb which filter params matches `country` or `native`**
+  - _GET_ Method
+  - Returns proverb object
+
+```curl
+https://localhost:5000/api/proverb/filter?filter=kenya
+```
 
 ### **❇️ GraphQl**
 
