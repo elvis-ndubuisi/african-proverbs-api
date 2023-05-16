@@ -9,6 +9,10 @@ import lodash from "lodash";
  * @returns A proverb object.
  */
 export function getProverbService({ filter }: { filter?: string }) {
+  if (!filter) {
+    return ProverbModel.aggregate([{ $sample: { size: 1 } }]);
+  }
+
   return ProverbModel.aggregate([
     { $match: { $or: [{ country: filter }, { native: filter }] } },
     { $sample: { size: 1 } },
