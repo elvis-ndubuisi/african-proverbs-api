@@ -1,6 +1,6 @@
 # **🌍 African Proverbs 🇳🇬**
 
-Curated list of african proverbs 🦁
+A curated list of African proverbs 🦁
 
 ## **🍇 Tech Stack 🦹‍♀️**
 
@@ -12,7 +12,7 @@ Curated list of african proverbs 🦁
 
 - Caching (Redis) ❌.
 - Email Services.
-- 🪛 JWT Role Based Authentication & Authorization .
+- 🪛 JWT Role Based Authentication & Authorization.
 - Cookie Management.
 - Schema Validation.
 - Safe Typing.
@@ -37,7 +37,7 @@ Curated list of african proverbs 🦁
 https://localhost:5000/api/proverb
 ```
 
-- **Fetch a random proverb which filter params matches `country` or `native`**
+- **Fetch a random proverb whose filter params match `country` or `native`**
   - _GET_ Method
   - Returns proverb object
 
