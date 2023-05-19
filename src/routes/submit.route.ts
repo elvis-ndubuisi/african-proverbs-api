@@ -19,7 +19,7 @@ const router = express.Router();
 
 router.post(
   "/api/submit",
-  cors({ origin: "https://africanproverbs.vercel.app", methods: ["GET"] }),
+  cors({ origin: "https://africanproverbs.vercel.app", methods: ["POST"] }),
   validateResources(submitProverbSchema),
   submitProverbHandler
 );

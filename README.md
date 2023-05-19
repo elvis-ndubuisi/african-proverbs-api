@@ -34,7 +34,7 @@ A curated list of African proverbs 🦁
   - Return proverb object
 
 ```curl
-https://localhost:5000/api/proverb
+https://africanproverbs.onrender.com/api/proverb
 ```
 
 - **Fetch a random proverb whose filter params match `country` or `native`**
@@ -42,7 +42,7 @@ https://localhost:5000/api/proverb
   - Returns proverb object
 
 ```curl
-https://localhost:5000/api/proverb/filter?filter=kenya
+https://africanproverbs.onrender.com/api/proverb/filter?filter=kenya
 ```
 
 ### **❇️ GraphQl**
