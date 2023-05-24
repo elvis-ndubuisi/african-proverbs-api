@@ -6,6 +6,6 @@ export default {
   mail_pass: process.env.MAIL_PASS,
   mail_sender: process.env.MAIL_USER,
   host: "https://africanproverbs.onrender.com",
-  frontpage: "https://africanheritage.vercel.app",
+  frontpage: "https://africanproverbs.vercel.app",
   secure_cookie: true,
 };
